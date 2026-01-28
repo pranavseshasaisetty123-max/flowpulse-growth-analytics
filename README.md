@@ -1,17 +1,43 @@
 ## FlowPulse Growth Analytics
 
-**Goal:** End-to-end Growth Analytics project for a B2C SaaS app (`FlowPulse`) covering data model, synthetic dataset, SQL analytics, Python EDA, and a CEO-ready dashboard.
+**Goal:** End-to-end Growth Analytics project for a B2C SaaS application (`FlowPulse`), covering data modeling, large-scale synthetic data generation, SQL analytics, Python-based EDA, and a CEO-ready decision dashboard.
 
-### 1. Business context
+This project simulates the work of a first data analyst at a fast-growing startup, focused on translating data into **business decisions**, not just charts.
 
-- **Product:** FlowPulse – workflow & habit-tracking app for knowledge workers and freelancers.
-- **Model:** Freemium with paid tiers (`Basic` $9/mo, `Pro` $19/mo, `Team` $49/mo).
-- **Key questions:**
-  - Are we growing efficiently (MRR, MoM growth)?
-  - Which channels and segments drive the best LTV?
-  - Where are we leaking revenue or losing users (churn, failed payments)?
+---
 
-### 2. Project structure
+### 1. Business Context
+
+- **Product:** FlowPulse — a workflow & habit-tracking app for knowledge workers and freelancers.
+- **Business Model:** Freemium with paid tiers:
+  - `Basic` – $9/month  
+  - `Pro` – $19/month  
+  - `Team` – $49/month
+- **Primary Objective:** Drive sustainable revenue growth while improving retention and marketing efficiency.
+
+**Key Business Questions**
+
+- Are we growing efficiently? (MRR, MoM growth)
+- Which customer segments and acquisition channels generate the highest LTV?
+- Where are we losing revenue? (churn, failed payments, revenue leakage)
+- How concentrated is revenue across customers?
+
+---
+
+### 2. Key KPIs Tracked
+
+- **Monthly Recurring Revenue (MRR)**
+- **Month-over-Month Revenue Growth**
+- **Customer Lifetime Value (LTV)**
+- **Customer Acquisition Cost (CAC)**
+- **Churn Rate & Retention Cohorts**
+- **LTV / CAC Ratio**
+- **Revenue Concentration (Pareto 80/20)**
+- **Revenue Leakage** (failed / refunded payments)
+
+---
+
+### 3. Project Structure
 
 ```text
 flowpulse-growth-analytics/
@@ -45,7 +71,9 @@ flowpulse-growth-analytics/
 └─ README.md
 ```
 
-### 3. Setup
+---
+
+### 4. Setup
 
 ```bash
 cd flowpulse-growth-analytics
@@ -58,13 +86,17 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Generate synthetic data
+---
+
+### 5. Data Generation
 
 ```bash
 python scripts/generate_synthetic_data.py
 ```
 
-This creates CSV files in `data/raw/`:
+This script generates realistic SaaS-style datasets with churn, growth patterns, and marketing attribution.
+
+Generated files in `data/raw/`:
 
 - `customers.csv`
 - `subscriptions.csv`
@@ -72,32 +104,77 @@ This creates CSV files in `data/raw/`:
 - `marketing_channels.csv`
 - `user_events.csv`
 
-### 5. Analysis
+---
 
-- **SQL (`/sql`)**
-  - `ddl_create_tables.sql` – schema definitions.
-  - `analytics_monthly_revenue.sql` – MRR & growth.
-  - `analytics_ltv.sql` – LTV by customer and segment.
-  - `analytics_churn_cohorts.sql` – retention cohorts.
-  - `analytics_cac_by_channel.sql` – CAC by marketing channel.
-  - `analytics_pareto_customers.sql` – top 20% customers by revenue.
-  - `analytics_revenue_leakage.sql` – failed/refunded payments and churn.
+### 6. Analysis Overview
 
-- **Notebooks (`/notebooks`)**
-  - `01_data_generation.ipynb` – sanity checks on synthetic data.
-  - `02_eda_growth_metrics.ipynb` – core growth & retention analysis.
-  - `03_feature_deep_dive_retention.ipynb` – engagement vs churn.
+**SQL Analysis (`/sql`)** – each script answers a specific business question:
 
-### 6. Dashboard
+- `ddl_create_tables.sql` – schema & table definitions.
+- `analytics_monthly_revenue.sql` – MRR trends & growth.
+- `analytics_ltv.sql` – LTV by customer, plan, and segment.
+- `analytics_churn_cohorts.sql` – retention & churn cohorts.
+- `analytics_cac_by_channel.sql` – marketing efficiency.
+- `analytics_pareto_customers.sql` – revenue concentration (top 20%).
+- `analytics_revenue_leakage.sql` – failed payments & revenue leakage.
 
-- Specification in `dashboard/powerbi_spec.md`.
-- Includes:
-  - KPIs: MRR, MRR growth %, active customers, churn, LTV, CAC, LTV/CAC.
-  - Pages: Overview, Acquisition, Revenue, Retention, Segments.
-  - Filters: date, country, segment, device, plan.
+**Python EDA (`/notebooks`)**
 
-### 7. Notes
+- `01_data_generation.ipynb` – data sanity checks.
+- `02_eda_growth_metrics.ipynb` – growth, churn, and revenue trends.
+- `03_feature_deep_dive_retention.ipynb` – engagement vs churn.
 
-- Dataset is synthetic but modeled to mimic real-world B2C SaaS growth, churn, and marketing performance.
-- Designed for a startup CEO / investor audience: focus on business impact, not just visuals.
+---
+
+### 7. Dashboard (CEO-Level)
+
+**Specification:** `dashboard/powerbi_spec.md`
+
+Designed for **executive decision-making**, not just reporting.
+
+- **KPIs Included**
+  - MRR & growth %
+  - Active customers
+  - Churn rate
+  - LTV, CAC, and LTV/CAC ratio
+- **Views**
+  - Overview
+  - Acquisition
+  - Revenue
+  - Retention
+  - Customer Segments
+- **Filters**
+  - Date
+  - Country
+  - Segment
+  - Device
+  - Subscription plan
+
+---
+
+### 8. Sample Key Insights
+
+> Insights are derived from the synthetic dataset and designed to mirror realistic SaaS behavior.
+
+- ~20% of customers contribute over 60% of total revenue, indicating strong revenue concentration.
+- Churn is highest within the first 2–3 months after conversion from free to paid plans.
+- Paid acquisition channels show higher CAC with lower retention compared to organic and referral channels.
+- Revenue leakage is primarily driven by failed renewals and delayed payment retries.
+
+---
+
+### 9. Business Recommendations
+
+- Introduce **annual and discounted long-term plans** to reduce early-stage churn.
+- Reallocate marketing spend from **high-CAC paid channels** toward referral and organic growth.
+- Implement **automated renewal reminders and smart retry logic** to reduce payment failures.
+- Design **onboarding nudges and engagement campaigns** to improve early product adoption and retention.
+
+---
+
+### 10. Notes
+
+- The dataset is synthetic, but modeled to reflect realistic SaaS growth, churn, and marketing dynamics.
+- The project emphasizes **business impact, metric selection, and decision-making**, not just visualizations.
+- **Target audience:** Startup CEOs, founders, investors, and hiring managers.
 
